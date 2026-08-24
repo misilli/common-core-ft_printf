@@ -6,74 +6,135 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/23 20:00:03 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/23 20:00:03 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/08/24 19:36:57 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdarg.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <stddef.h>
-# include <stdlib.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-void ft_putchar(int c)
+void	ft_putchar(int c)
 {
-    write(1,&c,1);
+	write(1, &c, 1);
 }
-//va arg ile burda ilerlet
-void ft_print(va_list i,int a, char c)
+
+size_t	ft_strlen(const char *s)
 {
-    va_arg(i,char):
-    if (c == 'c')
-        ft_putchar(va_arg);
-    else if (c == 's')
-        printf("%s", i);
-    else if (c == 'p')
-        printf("%p", i);
-    else if (c == 'd')
-        va_arg(i,int):
-        printf("%d", i);
-    else if (c == 'i')
-        printf("%i", i);
-    else if (c == 'u')
-        printf("%u", i);
-    else if (c == 'x')
-        printf("%x", i);
-    else if (c == 'X')
-        printf("%X", i);
-    else if (c == '%')
-        printf("%%", i);
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	ft_putstr(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		ft_putchar(s[i]);
+		i++;
+	}
+}
+
+void	ft_putnbr(long n)
+{
+	if (n < 0)
+	{
+		ft_putchar('-');
+		ft_putnbr(-(unsigned long)n);
+	}
+	else if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+	else
+		ft_putchar(n + '0');
+}
+
+void	ft_putnbr_base(long nbr, char *base)
+{
+	size_t	len;
+
+	len = ft_strlen(base);
+	if (len < 2)
+		return ;
+	if (nbr < 0)
+	{
+		ft_putchar('-');
+		nbr = -nbr;
+	}
+	if (nbr >= len)
+		ft_putnbr_base(nbr / len, base);
+	ft_putchar(base[nbr % len]);
+}
+
+void	adresyazmafonksiyonu(void *p)
+{
+	if(!p)
+		return;
+	unsigned long	adres;
+
+	adres = (unsigned long)p;
+	ft_putstr("0x");
+	ft_putnbr_base(adres, "0123456789abcdef");
+}
+
+// va arg ile burda ilerlet
+void	ft_print(va_list i, int a, char c)
+{
+	if (c == 'c')
+		ft_putchar(va_arg(i, int));
+	else if (c == 's')
+		ft_putstr(va_arg(i, char *));
+	else if (c == 'p')
+		adresyazmafonksiyonu(va_arg(i, void *));
+	else if (c == 'd' || c == 'i')
+		ft_putnbr(va_arg(i, int));
+	else if (c == 'u')
+		ft_putnbr(va_arg(i, unsigned int));
+	else if (c == 'x')
+		ft_putnbr_base(va_arg(i, int), "0123456789abcdef");
+	else if (c == 'X')
+		ft_putnbr_base(va_arg(i, int), "0123456789ABCDEF");
+	/*else if (c == '%')
+		printf("%%", i);*/
 }
 
 int	ft_printf(const char *str, ...)
 {
-    va_list values;
-    int i;
-    int val;
-    va_start(values, str);
+	va_list	values;
+	int		i;
+	int		val;
 
-    while (str[i])
-    {
-        if (str[i] == '%')
-        {
-            ft_print(values,0,str[i + 1]);
-            printf("%d", val);
-        }
-        else
-            ft_putchar(str[i]);
-            length++;
-        i++;
-    }
-    
-
-    return(0);
-
+	va_start(values, str);
+	while (str[i])
+	{
+		if (str[i] == '%')
+		{
+			ft_print(values, 0, str[i + 1]);
+			i++;
+		}
+		else
+			ft_putchar(str[i]);
+		i++;
+	}
+	return (0);
 }
 
-int main()
+int	main(void)
 {
-    int a = 123;
-    int b = 124;
-    int c = 125;
-    ft_printf("wqd%d\nfds%d\nfdsa%d",a,b,c );
+	char a = '2';
+	char b[] = "abc";
+	unsigned int c = 3000000;
+	char *pa = &a;
+	//printf("%p", (void *)pa);
+	ft_printf("%p", (void *)pa);
 }
