@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 01:54:14 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/26 19:43:21 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/08/26 20:03:26 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ int	ft_print(va_list *i, char c)
 	else if (c == 'd' || c == 'i')
 		return (ft_putnbr_base(va_arg(*i, int), "0123456789"));
 	else if (c == 'u')
-		return (ft_putnbr_base(va_arg(*i, unsigned int), "0123456789"));
+		return (ft_putnbr_base_unsigned(va_arg(*i, unsigned int),
+				"0123456789"));
 	else if (c == 'x')
-		return (ft_putnbr_base(va_arg(*i, unsigned int), "0123456789abcdef"));
+		return (ft_putnbr_base_unsigned(va_arg(*i, unsigned int),
+				"0123456789abcdef"));
 	else if (c == 'X')
-		return (ft_putnbr_base(va_arg(*i, unsigned int), "0123456789ABCDEF"));
+		return (ft_putnbr_base_unsigned(va_arg(*i, unsigned int),
+				"0123456789ABCDEF"));
 	else if (c == '%')
 		return (ft_putchar('%'));
 	return (ft_putchar('%') + ft_putchar(c));

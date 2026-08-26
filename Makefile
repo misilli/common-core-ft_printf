@@ -13,6 +13,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
+
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
 
