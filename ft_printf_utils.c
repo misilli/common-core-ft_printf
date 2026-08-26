@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 01:57:32 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/26 01:57:32 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/08/26 19:46:25 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@ int	ft_putchar(int c)
 {
 	write(1, &c, 1);
 	return (1);
-}
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }
 
 int	ft_putstr(char *s)
@@ -45,13 +35,30 @@ int	ft_putstr(char *s)
 	return (len);
 }
 
-int	ft_putnbr_base(long nbr, char *base)
+int ft_putnbr_base_unsigned(unsigned long nbr, const char *base)
 {
 	int	len;
 	int	count;
 
 	count = 0;
-	len = ft_strlen(base);
+	len = 0;
+	while (base[len])
+		len++;
+	if (nbr >= (unsigned long)len)
+		count += ft_putnbr_base_unsigned(nbr / len, base);
+	count += ft_putchar(base[nbr % len]);
+	return (count);
+}
+
+int	ft_putnbr_base(long nbr, const char *base)
+{
+	int	len;
+	int	count;
+
+	count = 0;
+	len = 0;
+	while (base[len])
+		len++;
 	if (nbr < 0)
 	{
 		count += ft_putchar('-');
@@ -63,13 +70,13 @@ int	ft_putnbr_base(long nbr, char *base)
 	return (count);
 }
 
-int	adresyazmafonksiyonu(void *p)
+int	ft_putaddr(void *p)
 {
-	unsigned long	adres;
+	unsigned long	addr;
 
 	if (p == NULL)
 		return (ft_putstr("(nil)"));
-	adres = (unsigned long)p;
+	addr = (unsigned long)p;
 	ft_putstr("0x");
-	return (2 + ft_putnbr_base(adres, "0123456789abcdef"));
+	return (2 + ft_putnbr_base_unsigned(addr, "0123456789abcdef"));
 }

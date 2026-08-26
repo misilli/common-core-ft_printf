@@ -6,10 +6,11 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 01:54:14 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/26 01:54:14 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/08/26 19:43:21 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include <stdarg.h>
 
 int	ft_print(va_list *i, char c)
@@ -19,7 +20,7 @@ int	ft_print(va_list *i, char c)
 	else if (c == 's')
 		return (ft_putstr(va_arg(*i, char *)));
 	else if (c == 'p')
-		return (adresyazmafonksiyonu(va_arg(*i, void *)));
+		return (ft_putaddr(va_arg(*i, void *)));
 	else if (c == 'd' || c == 'i')
 		return (ft_putnbr_base(va_arg(*i, int), "0123456789"));
 	else if (c == 'u')
@@ -30,7 +31,7 @@ int	ft_print(va_list *i, char c)
 		return (ft_putnbr_base(va_arg(*i, unsigned int), "0123456789ABCDEF"));
 	else if (c == '%')
 		return (ft_putchar('%'));
-	return (0);
+	return (ft_putchar('%') + ft_putchar(c));
 }
 
 int	ft_printf(const char *str, ...)
