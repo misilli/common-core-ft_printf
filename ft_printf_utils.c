@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 01:57:32 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/26 19:46:25 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/08/26 19:53:28 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_putstr(char *s)
 	return (len);
 }
 
-int ft_putnbr_base_unsigned(unsigned long nbr, const char *base)
+int	ft_putnbr_base_unsigned(unsigned long nbr, const char *base)
 {
 	int	len;
 	int	count;
